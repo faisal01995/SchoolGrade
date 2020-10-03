@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SchoolGrade.Models.Grades>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a href="#" class="btn btn-primary" onclick="AddEdit(0)"><i class="glyphicon glyphicon-plus"></i></a>
+</p>
+<table class="table">
+    <tr>
+        <th>No</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gradename)
+        </th>
+
+        <th></th>
+    </tr>
+    @{
+        int c = 0;
+        foreach (var item in Model)
+        {
+            c++;
+            <tr>
+                <td>@c</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gradename)
+                </td>
+
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.GradeId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.GradeId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.GradeId })*@
+                    <a href="#" class="btn btn-success" onclick="AddEdit(@item.GradeId)"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="#" class="btn btn-danger" onclick="Delt(@item.GradeId)"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+            </tr>
+        }
+    }
+</table>
+<div class="modal fade" id="mymodal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Add/Edit Grade</h3>
+
+            </div>
+            <div class="modal-body" id="mymodaldiv1">
+                <div style="text-align:center;display:none" id="loaderdiv">
+                    <img src="~/image/loadGIF.gif" width="150" />
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    var AddEdit = function (id) {
+        var url = "/Grades/addeditgrade/" + id;
+        $("#mymodaldiv1").load(url, function () {
+            $("#mymodal1").modal("show");
+        })
+    };
+    var Delt = function (id) {
+        var url = "/Grades/DelGrade/" + id;
+        $("#mymodaldiv1").load(url, function () {
+            $("#mymodal1").modal("show");
+        })
+    };
+</script>
